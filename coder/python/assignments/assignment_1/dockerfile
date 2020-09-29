@@ -1,0 +1,9 @@
+FROM alpine
+ARG DOCKER_DIR
+RUN mkdir ${DOCKER_DIR}
+COPY . ${DOCKER_DIR}
+RUN echo ${DOCKER_DIR}
+RUN ls ${DOCKER_DIR}
+RUN apk add python3
+CMD python3 ${DOCKER_DIR}/classes/exercise2.py
+#CMD python3 out/classes/exercise2.py

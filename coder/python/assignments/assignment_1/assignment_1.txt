@@ -1,0 +1,20 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Exercise 1 ::
+-------------
+
+Refer to link -- https://github.com/arunc1985/orchestrator/tree/programmer/coder/python
+
+
+Aim : Enable an User to run any python file inside of the path defined above and analyze the output.
+-----------------------------------------------------------------------------------------------------
+
+ - Build a Docker image on plain alpine OS from scratch to perform above tasks.
+ - While building use build arguments.
+ - While executing the image as a container, User must be able to perform the following tasks;
+     - Able to run any python file.
+     - Able to edit and python file and run again. The user must be able to edit and run without re-building the image.
+     - Use volumes to acheive above objective.
+
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
