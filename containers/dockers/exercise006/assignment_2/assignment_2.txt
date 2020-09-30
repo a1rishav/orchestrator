@@ -1,0 +1,58 @@
+-------------------------------------------------------------------------------------------------------------------------------------------------
+
+Exercise 2 ::
+--------------
+
+Refer to link -- https://github.com/arunc1985/orchestrator/tree/dockers/containers/dockers/exercise008
+
+
+Aim : Enable an User to run the Flask app seamlessly
+----------------------------------------------------
+
+ - Build a Docker image on plain alpine OS from scratch to perform above tasks.
+ - While building use build arguments.
+ - While executing the image as a container, User must be able to perform the following tasks;
+     - Able to run any router.
+     - Able to edit and python file and run again. The user must be able to edit and run without re-building the image.
+     - Use volumes to acheive above objective.
+     - Both Flask app and Mongo must be able to communicate with each other. Use Docker Networks.
+
+Solution:
+
+docker pull mongo
+docker run -d -p 27017:27017 --name mongodb mongo
+docker logs mongodb
+
+docker build -t py-app-mongo:assign-2 -f dockerfile .
+
+docker run -d --name flaskpy3-mongo \
+     -v /Users/rishavk/Documents/work/docker_repos/orchestrator/containers/dockers/exercise006/assignment_2/application/:/tests \
+     -e FLASKHOSTNAME='0.0.0.0' \
+     -e FLASKPORT=4500 \
+     -e MONGO_CONTAINER=mongodb \
+     -p 4500:4500 \
+     py-app-mongo:assign-2
+
+docker logs flaskpy3-mongo
+
+docker network create network-python-mongo
+docker network connect network-python-mongo mongodb
+docker network connect network-python-mongo flaskpy3-mongo
+
+# Remember : if container is removed and added again, network must be added too
+
+docker tag py-app-mongo:assign-2 urishav/first_repo:assign-2
+docker push urishav/first_repo:assign-2
+
+docker tag mongo:latest urishav/first_repo:mongodb
+docker push urishav/first_repo:mongodb
+
+# K8 
+
+kubectl delete deployment python-mongo && kubectl delete services python-mongo-service
+
+curl -XGET http://localhost:6000/
+kubectl apply -f k8s.yaml
+curl -XGET http://localhost:6000/hello_mongo/
+
+-----------------------------------------------------------------------------------------------------------------------------------------------

@@ -1,0 +1,9 @@
+FROM alpine
+RUN mkdir tests
+COPY ./application /tests
+RUN ls tests
+RUN apk add python3
+RUN apk add py3-pip
+RUN pip3 install -r tests/requirements
+RUN cat tests/flask_app.py
+CMD python3 tests/flask_app.py
