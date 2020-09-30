@@ -16,5 +16,34 @@ Aim : Enable an User to run any python file inside of the path defined above and
      - Able to edit and python file and run again. The user must be able to edit and run without re-building the image.
      - Use volumes to acheive above objective.
 
--------------------------------------------------------------------------------------------------------------------------------------------------
+Solution :
+
+docker build -t python-app-exec:assignment_1 \
+     --build-arg DOCKER_DIR=out \
+     -f dockerfile .
+
+docker run --name python-app-exercise1 \
+     -v /Users/rishavk/Documents/work/docker_repos/orchestrator/coder/python/assignments/assignment_1/classes/:/out/classes/ \
+     -e DOCKER_DIR=out \
+     python-app-exec:assignment_1 
+
+docker tag python-app-exec:assignment_1 urishav/first_repo:assignment_1
+docker push urishav/first_repo:assignment_1
+
+#K8 :
+
+kubectl apply -f k8s.yaml
+
+kubectl get deployments
+
+kubectl get pods
+
+kubectl logs <pod_name>
+
+
+Scratchpad:
+kubectl delete deployment python-package-56ccc8cb6-jh7pr && kubectl delete services python-package-56ccc8cb6-jh7pr
+
+Soultion link : https://github.com/a1rishav/orchestrator/tree/programmer/coder/python/assignments/assignment_1
+
 
